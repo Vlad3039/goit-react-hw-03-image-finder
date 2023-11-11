@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { BtnElement } from './Button.styled';
 import { Spinner } from 'react-bootstrap';
+import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 export const Btn = ({
   text,
