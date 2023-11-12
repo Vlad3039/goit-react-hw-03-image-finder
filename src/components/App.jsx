@@ -42,9 +42,9 @@ export class App extends Component {
   async fetchQuery(query, page) {
     try {
       await fetchData(query, page).then(result => {
-        const data = result.data;
-        const total = data.totalHits;
-        const picsArr = data.hits;
+        const { data } = result;
+        const { totalHits: total, hits: picsArr } = data;
+
         const picsLeft = total - 12 * this.state.page;
 
         if (picsArr.length === 0) {
@@ -54,11 +54,10 @@ export class App extends Component {
             notifySettings
           );
           return;
-        } else {
-          this.setState(prevState => ({
-            picsArr: [...prevState.picsArr, ...picsArr],
-          }));
         }
+        this.setState(prevState => ({
+          picsArr: [...prevState.picsArr, ...picsArr],
+        }));
 
         if (picsArr.length > 0 && this.state.page === 1) {
           Notiflix.Notify.success(
@@ -67,9 +66,7 @@ export class App extends Component {
           );
         }
 
-        picsLeft > 0
-          ? this.setState({ showLoadMoreBtn: true })
-          : this.setState({ showLoadMoreBtn: false });
+        this.setState({ showLoadMoreBtn: picsLeft > 0 });
       });
     } catch (error) {
       console.log(error);
