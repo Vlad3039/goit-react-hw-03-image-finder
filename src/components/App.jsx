@@ -54,10 +54,11 @@ export class App extends Component {
             notifySettings
           );
           return;
+        } else {
+          this.setState(prevState => ({
+            picsArr: [...prevState.picsArr, ...picsArr],
+          }));
         }
-        this.setState(prevState => ({
-          picsArr: [...prevState.picsArr, ...picsArr],
-        }));
 
         if (picsArr.length > 0 && this.state.page === 1) {
           Notiflix.Notify.success(
